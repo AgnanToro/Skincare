@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlowSkin - Login</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="login">
+    <div class="container">
+        
+        <main>
+            <section class="login-form">
+                <h2>Login</h2>
+                <form id="loginForm" action="../product-order.html" method="POST">
+                    <input id="email" type="text" name="Email" placeholder="Email" required>
+                    <input id="password" type="password" name="password" placeholder="Password" required>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                    <button type="submit" class="btn">Login</button>
+                </form>
+                <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+            </section>
+        </main>
+    </div>
+
+    </body>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                alert('Email dan password harus diisi!');
+                event.preventDefault();
+            } else if (!email.includes('@')) {
+                alert('Email harus mengandung @!');
+                event.preventDefault();
+            }
+        });
+    </script>
+

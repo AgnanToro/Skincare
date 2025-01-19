@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .checkout-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin-top: 0;
+        }
+        .product-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #fff0f5;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 8px;
+        }
+        .product-details {
+            flex-grow: 1;
+        }
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .product-price, .product-size {
+            margin: 0;
+            color: #666;
+        }
+        .order-details {
+            margin-top: 20px;
+        }
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .checkout-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #ffb6c1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <h1>Review Order</h1>
+        <div class="product-info">
+            <img class="product-image" id="productImage" src="../images/ss2.jpg" alt="Toner">
+            <div class="product-details">
+                <p class="product-name" id="productName">Skin 1004</p>
+                <p class="product-description" id="productDescription">Madagascar Sunscreen</p>
+                <p class="product-price" id="productPrice">$9.37</p>
+                <div class="product-size">
+                    <span>Size:</span>
+                    <input type="number" id="productSizeInput" value="210" style="width: 50px; text-align: center; border: none; background-color: transparent;">
+                    <button onclick="decreaseSize()" style="background-color: #ffb6c1; border: none; padding: 5px 10px; border-radius: 5px;">-</button>
+                    <button onclick="increaseSize()" style="background-color: #ffb6c1; border: none; padding: 5px 10px; border-radius: 5px;">+</button>
+                    <div id="successMessage" style="display:none; margin-top: 20px; padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px;">
+                        Your order has been successfully placed. Thank you for shopping with us!
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order-details">
+            <div class="order-row">
+                <span>Total:</span>
+                <input type="text" id="totalPrice" placeholder="Enter total price" style="border: none; background-color: transparent;">
+            </div>
+            <div class="order-row">
+                <span>Shipping Charges:</span>
+                <input type="text" id="shippingCharges" placeholder="Enter shipping charges" style="border: none; background-color: transparent;">
+            </div>
+            <div class="order-row">
+                <span>Address:</span>
+                <input type="text" id="shippingAddress" placeholder="Enter your address" style="border: none; background-color: transparent;">
+            </div>
+        </div>
+        <button class="checkout-button" onclick="showSuccessMessage()">Proceed to Payment</button>
+    </div>
+    <div id="successMessage" style="display:none; margin-top: 20px; padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px;">
+        Your order has been successfully placed. Thank you for shopping with us!
+    </div>
+
+   
+       
+   
+</body>
+
+    <script>
+        // Fungsi untuk mengambil parameter dari URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Fungsi untuk memperbarui informasi produk
+        function updateProductInfo() {
+            var productName = getUrlParameter('name');
+            var productDescription = getUrlParameter('description');
+            var productPrice = getUrlParameter('price');
+            var productSize = getUrlParameter('size');
+            var productImage = getUrlParameter('image');
+
+            if (productName) document.getElementById('productName').textContent = productName;
+            if (productDescription) document.getElementById('productDescription').textContent = productDescription;
+            if (productPrice) {
+                document.getElementById('productPrice').textContent = '$' + productPrice;
+                document.getElementById('totalPrice').textContent = '$' + productPrice;
+            }
+            if (productSize) document.getElementById('productSize').textContent = 'Size: ' + productSize;
+            if (productImage) document.getElementById('productImage').src = productImage;
+        }
+
+        // Panggil fungsi saat halaman dimuat
+        window.onload = updateProductInfo;
+
+        function decreaseSize() {
+            var sizeInput = document.getElementById('productSizeInput');
+            var currentSize = parseInt(sizeInput.value);
+            if (currentSize > 1) {
+                sizeInput.value = currentSize - 1;
+            }
+        }
+
+        function increaseSize() {
+            var sizeInput = document.getElementById('productSizeInput');
+            var currentSize = parseInt(sizeInput.value);
+            sizeInput.value = currentSize + 1;
+        }
+
+        function showSuccessMessage() {
+            document.getElementById('successMessage').style.display = 'block';
+            alert('Your order has been successfully placed. Thank you for shopping with us!');
+        }
+    </script>
+
+</body>
+</html>
